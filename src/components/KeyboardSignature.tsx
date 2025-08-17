@@ -42,8 +42,7 @@ const keyboardLayouts: Record<KeyboardLayout, Record<string, Key>> = {
 export const KeyboardSignature = () => {
   const [name, setName] = useState("");
   // TODO: implement multiple keyboard layouts I guess
-  const [currentKeyboardLayout, _setCurrentKeyboardLayout] =
-    useState<KeyboardLayout>("qwerty");
+  const [currentKeyboardLayout] = useState<KeyboardLayout>("qwerty");
   const [keyboardVisible, setKeyboardVisible] = useState(false);
 
   // Flash keyboard when name changes
@@ -59,7 +58,7 @@ export const KeyboardSignature = () => {
     } else {
       setKeyboardVisible(false);
     }
-  }, [name]);
+  }, [name, currentKeyboardLayout]);
 
   // Calculate signature path
   const signaturePath = useMemo(() => {
@@ -84,7 +83,7 @@ export const KeyboardSignature = () => {
     }
 
     return path;
-  }, [name]);
+  }, [name, currentKeyboardLayout]);
 
   // Get active keys for highlighting
   const activeKeys = useMemo(() => {
@@ -94,7 +93,7 @@ export const KeyboardSignature = () => {
         .split("")
         .filter((char) => char in keyboardLayouts[currentKeyboardLayout]),
     );
-  }, [name]);
+  }, [name, currentKeyboardLayout]);
 
   // Export functions
   const exportSVG = () => {
@@ -249,7 +248,7 @@ export const KeyboardSignature = () => {
         </div>
 
         <a
-          href="https://github.com/cnrad/keyboard-signature"
+          href="https://github.com/DEADSERPENT/keyboard-signature"
           target="_blank"
           rel="noreferrer noopener"
           className="font-medium text-neutral-500 border border-neutral-700/50 px-3.5 py-1.5 bg-neutral-900/50 text-sm rounded-md text-center hover:bg-neutral-900/75 hover:text-neutral-200 transition-all duration-100 ease-out"
